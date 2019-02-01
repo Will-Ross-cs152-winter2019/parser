@@ -1,2 +1,2 @@
 # parser
-Lab2, for CS153
+Lab2, for CS152
