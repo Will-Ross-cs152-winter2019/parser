@@ -45,9 +45,54 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    INTEGER_LITERAL = 258,
-    PLUS = 259,
-    MULT = 260
+    FUNCTION = 258,
+    BEGIN_PARAMS = 259,
+    END_PARAMS = 260,
+    BEGIN_LOCALS = 261,
+    END_LOCALS = 262,
+    BEGIN_BODY = 263,
+    END_BODY = 264,
+    INTEGER = 265,
+    ARRAY = 266,
+    OF = 267,
+    IF = 268,
+    THEN = 269,
+    ENDIF = 270,
+    ELSE = 271,
+    WHILE = 272,
+    DO = 273,
+    BEGINLOOP = 274,
+    ENDLOOP = 275,
+    CONTINUE = 276,
+    READ = 277,
+    WRITE = 278,
+    TRUE = 279,
+    FALSE = 280,
+    RETURN = 281,
+    SEMICOLON = 282,
+    COLON = 283,
+    COMMA = 284,
+    NUMBER = 285,
+    IDENT = 286,
+    MULT = 287,
+    DIV = 288,
+    MOD = 289,
+    ADD = 290,
+    SUB = 291,
+    EQ = 292,
+    NEQ = 293,
+    LT = 294,
+    GT = 295,
+    LTE = 296,
+    GTE = 297,
+    L_SQUARE_BRACKET = 298,
+    R_SQUARE_BRACKET = 299,
+    L_PAREN = 300,
+    R_PAREN = 301,
+    AND = 302,
+    OR = 303,
+    NOT = 304,
+    ASSIGN = 305
   };
 #endif
 
@@ -56,12 +101,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 10 "calc.y" /* yacc.c:1909  */
+#line 8 "mini_l.y" /* yacc.c:1909  */
 
-  int       int_val;
-  string*   op_val;
+double val;
+char* op;
 
-#line 65 "y.tab.h" /* yacc.c:1909  */
+#line 110 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
