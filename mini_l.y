@@ -28,95 +28,118 @@ char* op;
 
 %%
 
-program:	/* empty */  {printf("program -> epsilon\n");} 
-                | function {printf("program -> function\n");};
+program:	/* empty */	{printf("program -> epsilon\n");} 
+                | function 	{printf("program -> function\n");};
 
-function:       FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop 
-                END_LOCALS BEGIN_BODY statement SEMICOLON statement_loop END_BODY;
+function:       FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY;
 
-dec_loop:       declaration SEMICOLON 
-		| declaration SEMICOLON dec_loop;
+dec_loop:       declaration SEMICOLON 				{printf("dec_loop -> declaration SEMICOLON\n")}
+		| declaration SEMICOLON dec_loop		{printf("dec_loop -> declaration SEMICOLON dec_loop\n")}
+		;	
 
-declaration:    ident_loop COLON INTEGER 
-                | ident_loop COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER;
+declaration:    ident_loop COLON INTEGER 							{printf("declaration -> ident_loop COLON INTEGER\n")}
+                | ident_loop COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER	{printf("declaration -> ident_loop COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n")}
+		;
 
-ident_loop:     IDENT 
-		| IDENT COMMA ident_loop;    	
+ident_loop:     IDENT 				{printf("ident_loop -> IDENT\n")}
+		| IDENT COMMA ident_loop	{printf("ident_loop -> IDENT COMMA ident_loop\n")}
+		; 
 
-statement:      var ASSIGN expression
-                | if_state
-                | while_state
-                | dowhile_state
-                | read_state
-                | write_state
-                | CONTINUE 
-		| RETURN expression;
+statement:      var ASSIGN expression	{printf("statement -> var ASSIGN expression\n")}
+                | if_state		{printf("statement -> if_state\n")}
+                | while_state		{printf("statement -> while_state\n")}
+                | dowhile_state		{printf("statement -> dowhile_state\n")}
+                | read_state		{printf("statement -> read_state\n")}
+                | write_state		{printf("statement -> write_state\n")}
+                | CONTINUE 		{printf("statement -> CONTINUE\n")}
+		| RETURN expression	{printf("statement -> RETURN expression\n")}
+		;
 
-if_state:       IF bool_expr THEN statement SEMICOLON statement_loop else_loop ENDIF; 
+if_state:       IF bool_expr THEN statement_loop else_loop ENDIF		{printf("if_state -> IF bool_expr THEN statement SEMICOLON statement_loop else_loop ENDIF\n")}
+		; 
 
-while_state:    WHILE bool_expr BEGINLOOP statement SEMICOLON statement_loop ENDLOOP;
+while_state:    WHILE bool_expr BEGINLOOP statement_loop ENDLOOP		{printf("while_state -> WHILE bool_expr BEGINLOOP statement SEMICOLON statement_loop ENDLOOP\n")}
+		;
 
-dowhile_state:	DO BEGINLOOP statement SEMICOLON statement_loop ENDLOOP WHILE bool_expr;
+dowhile_state:	DO BEGINLOOP statement_loop ENDLOOP WHILE bool_expr 		{printf("dowhile_state -> DO BEGINLOOP statement SEMICOLON statement_loop ENDLOOP WHILE bool_expr\n")}
+		;
 
-read_state:     READ var_loop;
+read_state:     READ var_loop		{printf("read_state -> READ var_loop\n")}
+		;
 
-write_state:    WRITE var_loop;
+write_state:    WRITE var_loop		{printf("write_state -> WRITE var_loop\n")}
+		;
 
-var_loop:       var 
-		| var COMMA var_loop;
+var_loop:       var 			{printf("var_loop -> var\n")}
+		| var COMMA var_loop	{printf("var_loop -> var COMMA var_loop\n")}
+		;
 
-else_loop:      /* empty */  
-                | ELSE statement SEMICOLON statement_loop;
+else_loop:      /* empty */					{printf("else_loop -> epsilon\n")}  
+                | ELSE statement_loop	{printf("else_loop -> ELSE statement SEMICOLON statement_loop\n")}
+		;
 
-statement_loop: /* empty */ 
-                | statement SEMICOLON statement_loop; 
+statement_loop: statement SEMICOLON			{printf("statement_loop -> epsilon\n")} 
+                | statement SEMICOLON statement_loop	{printf("statement_loop -> statement SEMICOLON statement_loop\n")}
+		; 
 
-bool_expr:      relation_and_expr 
-		| OR relation_and_expr;
+bool_expr:      relation_and_expr 		{printf("bool_expr -> relation_and_expr\n")}
+		| OR relation_and_expr		{printf("bool_expr -> OR relation_and_expr\n")}
+		;
 
-relation_and_expr:	relation_expr 
-			| AND relation_expr;
+relation_and_expr:	relation_expr 		{printf("relation_and_expr -> relation_expr\n")}
+			| AND relation_expr	{printf("relation_and_expr -> AND relatio_expr\n")}
+			;
 
-relation_expr:  NOT relation_expr
-                | expression comp expression
-                | TRUE
-                | FALSE
-                | L_PAREN bool_expr R_PAREN;
+relation_expr:  NOT relation_expr		{printf("relation_expr -> NOT relation_expr\n")}
+                | expression comp expression	{printf("relation_expr -> expression comp expression\n")}
+                | TRUE				{printf("relation_expr -> TRUE\n")}
+                | FALSE				{printf("relation_expr -> FALSE\n")}
+                | L_PAREN bool_expr R_PAREN	{printf("relation_expr -> L_PAREN bool_expr R_PAREN\n")}
+		;
 
-comp:	        EQ 
-		| NEQ 
-		| LT 
-		| GT 
-		| LTE 
-		| GTE ;
+comp:	        EQ 		{printf("comp -> EQ\n")}
+		| NEQ 		{printf("comp -> NEQ\n")}
+		| LT 		{printf("comp -> LT\n")}
+		| GT 		{printf("comp -> GT\n")}
+		| LTE 		{printf("LTE\n")}
+		| GTE 		{printf("GTE\n")}
+		;	
 
-para:           expression 
-		| expression COMMA para;
+para:           expression 			{printf("para -> expression\n")}
+		| expression COMMA para		{printf("para -> expression COMMA para\n")}
+		;
 
-t3:             IDENT L_PAREN para R_PAREN 
-		| IDENT L_PAREN R_PAREN;  
+t3:             IDENT L_PAREN para R_PAREN 	{printf("t3 -> IDENT L_PAREN para R_PAREN\n")}
+		| IDENT L_PAREN R_PAREN		{printf("t3 -> IDENT L_PAREN R_PAREN\n")}
+		;  
 
-t2:             SUB t1; 
+t2:             SUB t1				{printf("t2 -> SUB t1\n")}
+		;
 
-t1:             var 
-		| NUMBER 
-		| R_PAREN expression L_PAREN;
+t1:             var 				{printf("t1 -> var\n")}
+		| NUMBER 			{printf("t1 -> NUMBER\n")}
+		| R_PAREN expression L_PAREN	{printf("t1 -> R_PAREN expression L_PAREN\n")}
+		;
 
-term:           t1 
-                | t2
-		| t3;
+term:           t1 				{printf("term -> t1\n")}
+                | t2				{printf("term -> t2\n")}
+		| t3				{printf("term -> t3\n")}
+		;		
 
-multi_express:  term 
-		| term MULT term 
-		| term DIV term 
-		| term MOD term;
+multi_express:  term 				{printf("multi_express -> term\n")}
+		| term MULT term 		{printf("multi_express -> term MULT term\n")}
+		| term DIV term 		{printf("multi_express -> term DIV term\n")}
+		| term MOD term			{printf("multi_express -> term MOD term\n")}
+		;
 
-expression:     multi_express 
-		| multi_express ADD multi_express 
-		| multi_express SUB multi_express;
+expression:     multi_express 				{printf("expression -> multi_express\n")}
+		| multi_express ADD multi_express	{printf("expression -> multi_express ADD multi_express\n")}
+		| multi_express SUB multi_express	{printf("expression -> multi_express SUB multi_express\n")}
+		;
 
-var:            IDENT 
-		| IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET;
+var:            IDENT 								{printf("var -> IDENT\n")}
+		| IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET		{printf("IDENT L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n")}
+		;
 
 
 %%
