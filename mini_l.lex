@@ -146,16 +146,3 @@ RETURN		"return"
 (_|{NUMBER})+({IDENT})		{printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", numLines, numChar, yytext); exit(1);}
 .				{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", numLines, numChar, yytext); exit(1);}
 
-%%
-int main(int argc, char **argv)
-{
-  if ((argc > 1) && (freopen(argv[1], "r", stdin) == NULL))
-  {
-    cerr << argv[0] << ": File " << argv[1] << " cannot be opened.\n";
-    exit( 1 );
-  }
-  yylex(); 
-  yyparse();
-
-  return 0;
-}

@@ -25,16 +25,19 @@ char* op;
 
 %right	NOT ASSIGN
 
+%type <int_val>  funct
 %%
 
 program:	/* empty */	{printf("program -> epsilon\n");} 
-                | funct 	{printf("program -> function\n");};
+                | funct 	{printf("program -> function\n");}
+                ;
 
 funct:       FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
 		{printf("FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY");}
 		;
 
-dec_loop:       declaration SEMICOLON 				{printf("dec_loop -> declaration SEMICOLON\n");}
+dec_loop:         {}
+                | declaration SEMICOLON 				{printf("dec_loop -> declaration SEMICOLON\n");}
 		| declaration SEMICOLON dec_loop		{printf("dec_loop -> declaration SEMICOLON dec_loop\n");}
 		;	
 
@@ -141,6 +144,18 @@ var:            IDENT 								{printf("var -> IDENT\n");}
 
 
 %%
+
+int main(int argc, char **argv)
+{
+  if ((argc > 1) && (freopen(argv[1], "r", stdin) == NULL))
+  {
+    cerr << argv[0] << ": File " << argv[1] << " cannot be opened.\n";
+    exit( 1 );
+  }
+  yyparse();
+
+  return 0;
+}
 
 int yyerror(char* s){
 
