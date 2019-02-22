@@ -144,5 +144,6 @@ RETURN		"return"
 %%
 int main(){
     yylex();
+    yyparse();
     return 0;
 }
