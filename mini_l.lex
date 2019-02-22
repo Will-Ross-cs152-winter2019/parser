@@ -107,29 +107,29 @@ RETURN		"return"
 {BEGIN_PARAMS}		{printf("BEGIN_PARAMS\n");numChar+= yyleng;}
 {END_PARAMS}		{printf("END_PARAMS\n");numChar+= yyleng;}
 {BEGIN_LOCALS}		{printf("BEGIN_LOCALS\n");numChar+= yyleng;}
-{END_LOCALS}		{printf("END_LOCALS\n");return END_LOCALS;}
-{BEGIN_BODY}		{printf("BEGIN_BODY\n");return BEGIN_BODY;}
-{END_BODY}		{printf("END_BODY\n"); return END_BODY;}
-{INTEGER}		{printf("INTEGER\n"); return INTEGER;}
-{ARRAY}			{printf("ARRAY\n"); return ARRAY;}
-{OF}			{printf("OF\n"); return OF;}
-{IF}			{printf("IF\n"); return IF;}
-{THEN}			{printf("THEN\n"); return THEN;}
-{ENDIF}			{printf("ENDIF\n"); return ENDIF;}
-{ELSE}			{printf("ELSE\n"); return ELSE;}
-{WHILE}			{printf("WHILE\n"); return WHILE;}
-{DO}			{printf("DO\n"); return DO;}
-{BEGINLOOP}		{printf("BEGINLOOP\n"); return BEGINLOOP;}
-{ENDLOOP}		{printf("ENDLOOP\n"); return ENDLOOP;}
-{CONTINUE}		{printf("CONTINUE\n"); return CONTINUE;}
-{READ}			{printf("READ\n"); return READ;}
-{WRITE}			{printf("WRITE\n"); return WRITE;}
-{AND}			{printf("AND\n"); return AND;}
-{OR}			{printf("OR\n"); return OR;}
-{NOT}			{printf("NOT\n"); return NOT;}
-{TRUE}			{printf("TRUE\n"); return TRUE;}
-{FALSE}			{printf("FALSE\n"); return FALSE;}
-{RETURN}		{printf("RETURN\n"); return RETURN;}
+{END_LOCALS}		{printf(numChar+= yyleng; return END_LOCALS;}
+{BEGIN_BODY}		{printf(numChar+= yyleng; return BEGIN_BODY;}
+{END_BODY}		{printf(numChar+= yyleng; return END_BODY;}
+{INTEGER}		{printf(numChar+= yyleng; return INTEGER;}
+{ARRAY}			{printf(numChar+= yyleng; return ARRAY;}
+{OF}			{printf(numChar+= yyleng; return OF;}
+{IF}			{printf(numChar+= yyleng; return IF;}
+{THEN}			{printf(numChar+= yyleng; return THEN;}
+{ENDIF}			{printf(numChar+= yyleng; return ENDIF;}
+{ELSE}			{printf(numChar+= yyleng; return ELSE;}
+{WHILE}			{printf(numChar+= yyleng; return WHILE;}
+{DO}			{printf(numChar+= yyleng; return DO;}
+{BEGINLOOP}		{printf(numChar+= yyleng; return BEGINLOOP;}
+{ENDLOOP}		{printf(numChar+= yyleng; return ENDLOOP;}
+{CONTINUE}		{printf(numChar+= yyleng; return CONTINUE;}
+{READ}			{printf(numChar+= yyleng; return READ;}
+{WRITE}			{printf(numChar+= yyleng; return WRITE;}
+{AND}			{printf(numChar+= yyleng; return AND;}
+{OR}			{printf(numChar+= yyleng; return OR;}
+{NOT}			{printf(numChar+= yyleng; return NOT;}
+{TRUE}			{printf(numChar+= yyleng; return TRUE; }
+{FALSE}			{printf(numChar+= yyleng; return FALSE;}
+{RETURN}		{printf(numChar+= yyleng; return RETURN;}
 
 {IDENT} 		{numChar += yyleng; yylval.op = new std::string(yytext); return IDENT;}
 {NUMBER} 		{printf("NUMBER %d\n", atoi(yytext));numChar += yyleng;}
