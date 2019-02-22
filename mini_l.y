@@ -32,12 +32,12 @@ program:	/* empty */	{printf("program -> epsilon\n");}
                 | funct 	{printf("program -> function\n");}
                 ;
 
-funct:       FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
+funct:       	FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
 		{printf("FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY");}
 		;
 
-dec_loop:         {}
-                | declaration SEMICOLON 				{printf("dec_loop -> declaration SEMICOLON\n");}
+dec_loop:       /* empty */  					{printf("dec_loop -> epsilon\n");}
+                | declaration SEMICOLON 			{printf("dec_loop -> declaration SEMICOLON\n");}
 		| declaration SEMICOLON dec_loop		{printf("dec_loop -> declaration SEMICOLON dec_loop\n");}
 		;	
 
@@ -45,7 +45,7 @@ declaration:    ident_loop COLON INTEGER 							{printf("declaration -> ident_lo
                 | ident_loop COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER	{printf("declaration -> ident_loop COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n");}
 		;
 
-ident_loop:     IDENT 				{printf("ident_loop -> IDENT (*$1)\n");}
+ident_loop:     IDENT 				{printf("ident_loop -> IDENT\n");}
 		| IDENT COMMA ident_loop	{printf("ident_loop -> IDENT COMMA ident_loop\n");}
 		; 
 
