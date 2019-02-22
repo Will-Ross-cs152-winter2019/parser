@@ -107,38 +107,38 @@ RETURN		"return"
 {BEGIN_PARAMS}		{printf("BEGIN_PARAMS\n");numChar+= yyleng;}
 {END_PARAMS}		{printf("END_PARAMS\n");numChar+= yyleng;}
 {BEGIN_LOCALS}		{printf("BEGIN_LOCALS\n");numChar+= yyleng;}
-{END_LOCALS}		{printf("END_LOCALS\n");numChar+= yyleng;}
-{BEGIN_BODY}		{printf("BEGIN_BODY\n");numChar+= yyleng;}
-{END_BODY}		{printf("END_BODY\n");numChar+= yyleng;}
-{INTEGER}		{printf("INTEGER\n");numChar+= yyleng;}
-{ARRAY}			{printf("ARRAY\n");numChar+= yyleng;}
-{OF}			{printf("OF\n");numChar+= yyleng;}
-{IF}			{printf("IF\n");numChar+= yyleng;}
-{THEN}			{printf("THEN\n");numChar+= yyleng;}
-{ENDIF}			{printf("ENDIF\n");numChar+= yyleng;}
-{ELSE}			{printf("ELSE\n");numChar+= yyleng;}
-{WHILE}			{printf("WHILE\n");numChar+= yyleng;}
-{DO}			{printf("DO\n");numChar+= yyleng;}
-{BEGINLOOP}		{printf("BEGINLOOP\n");numChar+= yyleng;}
-{ENDLOOP}		{printf("ENDLOOP\n");numChar+= yyleng;}
-{CONTINUE}		{printf("CONTINUE\n");numChar+= yyleng;}
-{READ}			{printf("READ\n");numChar+= yyleng;}
-{WRITE}			{printf("WRITE\n");numChar+= yyleng;}
-{AND}			{printf("AND\n");numChar+= yyleng;}
-{OR}			{printf("OR\n");numChar+= yyleng;}
-{NOT}			{printf("NOT\n");numChar+= yyleng;}
-{TRUE}			{printf("TRUE\n");numChar+= yyleng;}
-{FALSE}			{printf("FALSE\n");numChar+= yyleng;}
-{RETURN}		{printf("RETURN\n");numChar+= yyleng;}
+{END_LOCALS}		{printf("END_LOCALS\n");return END_LOCALS;}
+{BEGIN_BODY}		{printf("BEGIN_BODY\n");return BEGIN_BODY;}
+{END_BODY}		{printf("END_BODY\n"); return END_BODY;}
+{INTEGER}		{printf("INTEGER\n"); return INTEGER;}
+{ARRAY}			{printf("ARRAY\n"); return ARRAY;}
+{OF}			{printf("OF\n"); return OF;}
+{IF}			{printf("IF\n"); return IF;}
+{THEN}			{printf("THEN\n"); return THEN;}
+{ENDIF}			{printf("ENDIF\n"); return ENDIF;}
+{ELSE}			{printf("ELSE\n"); return ELSE;}
+{WHILE}			{printf("WHILE\n"); return WHILE;}
+{DO}			{printf("DO\n"); return DO;}
+{BEGINLOOP}		{printf("BEGINLOOP\n"); return BEGINLOOP;}
+{ENDLOOP}		{printf("ENDLOOP\n"); return ENDLOOP;}
+{CONTINUE}		{printf("CONTINUE\n"); return CONTINUE;}
+{READ}			{printf("READ\n"); return READ;}
+{WRITE}			{printf("WRITE\n"); return WRITE;}
+{AND}			{printf("AND\n"); return AND;}
+{OR}			{printf("OR\n"); return OR;}
+{NOT}			{printf("NOT\n"); return NOT;}
+{TRUE}			{printf("TRUE\n"); return TRUE;}
+{FALSE}			{printf("FALSE\n"); return FALSE;}
+{RETURN}		{printf("RETURN\n"); return RETURN;}
 
-{IDENT} 		{printf("IDENT %s\n", yytext);numChar += yyleng;}
+{IDENT} 		{numChar += yyleng; yylval.op = new std::string(yytext); return IDENT;}
 {NUMBER} 		{printf("NUMBER %d\n", atoi(yytext));numChar += yyleng;}
 {WH}+			{numChar += yyleng;}
 \n			{++numLines; numChar = 1;}
 {TAB}			{numChar += 3;}
 "##".*
 {IDENT}_+ 			{printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", numLines, numChar, yytext); exit(1);}
-(_|{NUMBER})+({IDENT})	{printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", numLines, numChar, yytext); exit(1);}
+(_|{NUMBER})+({IDENT})		{printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", numLines, numChar, yytext); exit(1);}
 .				{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", numLines, numChar, yytext); exit(1);}
 
 %%
