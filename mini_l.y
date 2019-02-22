@@ -96,14 +96,14 @@ para:           expression
 t3:             IDENT L_PAREN para R_PAREN 
 		| IDENT L_PAREN R_PAREN;  
 
-t2:             SUB t1;
+t2:             SUB t1; 
 
 t1:             var 
 		| NUMBER 
 		| R_PAREN expression L_PAREN;
 
 term:           t1 
-		| t2 
+                | t2
 		| t3;
 
 multi_express:  term 
@@ -121,4 +121,7 @@ var:            IDENT
 
 %%
 
+int yyerror(char* s){
 
+    return 0;
+}

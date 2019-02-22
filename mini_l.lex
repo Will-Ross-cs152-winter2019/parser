@@ -142,7 +142,7 @@ RETURN		"return"
 .				{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", numLines, numChar, yytext); exit(1);}
 
 %%
-main()
-        {
-        yylex();
+int main(){
+    yylex();
+    return 0;
 }
