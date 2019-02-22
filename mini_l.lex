@@ -81,58 +81,58 @@ RETURN		"return"
 	 int numLines = 1, numChar = 1;
 
 %%
-{ADD} 			{printf("ADD\n");numChar+= yyleng;}
-{SUB} 			{printf("SUB\n");numChar+= yyleng;}
-{MULT} 			{printf("MULT\n");numChar+= yyleng;}
-{MOD} 			{printf("MOD\n");numChar+= yyleng;}
-{DIV} 			{printf("DIV\n");numChar+= yyleng;}
+{ADD} 			{numChar+= yyleng; return ADD;}
+{SUB} 			{numChar+= yyleng; return SUB;}
+{MULT} 			{numChar+= yyleng; return MULT;}
+{MOD} 			{numChar+= yyleng; return MOD;}
+{DIV} 			{numChar+= yyleng; return DIV;}
 
-{EQ} 			{printf("EQ\n");numChar+= yyleng;}
-{NEQ} 			{printf("NEQ\n");numChar+= yyleng;}
-{LT} 			{printf("LT\n");numChar+= yyleng;}
-{GT} 			{printf("GT\n");numChar+= yyleng;}
-{LTE} 			{printf("LTE\n");numChar+= yyleng;}
-{GTE} 			{printf("GTE\n");numChar+= yyleng;}
+{EQ} 			{numChar+= yyleng; return EQ;}
+{NEQ} 			{;numChar+= yyleng; return NEQ;}
+{LT} 			{numChar+= yyleng; return LT;}
+{GT} 			{numChar+= yyleng; return GT;}
+{LTE} 			{numChar+= yyleng; return LTE;}
+{GTE} 			{numChar+= yyleng; return GTE;}
 
-{SEMICOLON} 		{printf("SEMICOLON\n");numChar+= yyleng;}
-{COLON} 		{printf("COLON\n");numChar+= yyleng;}
-{COMMA} 		{printf("COMMA\n");numChar+= yyleng;}
-{L_PAREN} 		{printf("L_PAREN\n");numChar+= yyleng;}
-{R_PAREN} 		{printf("R_PAREN\n");numChar+= yyleng;}
-{L_SQUARE_BRACKET} 	{printf("L_SQUARE_BRACKET\n");numChar+= yyleng;}
-{R_SQUARE_BRACKET} 	{printf("R_SQUARE_BRACKET\n");numChar+= yyleng;}
-{ASSIGN} 		{printf("ASSIGN\n");numChar+= yyleng;}
+{SEMICOLON} 		{numChar+= yyleng; return SEMICOLON:}
+{COLON} 		{numChar+= yyleng; return COLON;}
+{COMMA} 		{numChar+= yyleng; return COMMA;}
+{L_PAREN} 		{numChar+= yyleng; return L_PAREN;}
+{R_PAREN} 		{numChar+= yyleng; return R_PAREN;}
+{L_SQUARE_BRACKET} 	{numChar+= yyleng; return L_SQUARE_BRACKET;}
+{R_SQUARE_BRACKET} 	{numChar+= yyleng; return R_SQUARE_BRACKET;}
+{ASSIGN} 		{numChar+= yyleng; return ASSIGN;}
 
-{FUNCTION}		{printf("FUNCTION\n");numChar+= yyleng;}
-{BEGIN_PARAMS}		{printf("BEGIN_PARAMS\n");numChar+= yyleng;}
-{END_PARAMS}		{printf("END_PARAMS\n");numChar+= yyleng;}
-{BEGIN_LOCALS}		{printf("BEGIN_LOCALS\n");numChar+= yyleng;}
-{END_LOCALS}		{printf(numChar+= yyleng; return END_LOCALS;}
-{BEGIN_BODY}		{printf(numChar+= yyleng; return BEGIN_BODY;}
-{END_BODY}		{printf(numChar+= yyleng; return END_BODY;}
-{INTEGER}		{printf(numChar+= yyleng; return INTEGER;}
-{ARRAY}			{printf(numChar+= yyleng; return ARRAY;}
-{OF}			{printf(numChar+= yyleng; return OF;}
-{IF}			{printf(numChar+= yyleng; return IF;}
-{THEN}			{printf(numChar+= yyleng; return THEN;}
-{ENDIF}			{printf(numChar+= yyleng; return ENDIF;}
-{ELSE}			{printf(numChar+= yyleng; return ELSE;}
-{WHILE}			{printf(numChar+= yyleng; return WHILE;}
-{DO}			{printf(numChar+= yyleng; return DO;}
-{BEGINLOOP}		{printf(numChar+= yyleng; return BEGINLOOP;}
-{ENDLOOP}		{printf(numChar+= yyleng; return ENDLOOP;}
-{CONTINUE}		{printf(numChar+= yyleng; return CONTINUE;}
-{READ}			{printf(numChar+= yyleng; return READ;}
-{WRITE}			{printf(numChar+= yyleng; return WRITE;}
-{AND}			{printf(numChar+= yyleng; return AND;}
-{OR}			{printf(numChar+= yyleng; return OR;}
-{NOT}			{printf(numChar+= yyleng; return NOT;}
-{TRUE}			{printf(numChar+= yyleng; return TRUE; }
-{FALSE}			{printf(numChar+= yyleng; return FALSE;}
-{RETURN}		{printf(numChar+= yyleng; return RETURN;}
+{FUNCTION}		{numChar+= yyleng; return FUNCTION;}
+{BEGIN_PARAMS}		{numChar+= yyleng; return BEGIN_PARAMS;}
+{END_PARAMS}		{numChar+= yyleng; return END_PARAMS;}
+{BEGIN_LOCALS}		{numChar+= yyleng; return BEGIN_LOCALS;}
+{END_LOCALS}		{numChar+= yyleng; return END_LOCALS;}
+{BEGIN_BODY}		{numChar+= yyleng; return BEGIN_BODY;}
+{END_BODY}		{numChar+= yyleng; return END_BODY;}
+{INTEGER}		{numChar+= yyleng; return INTEGER;}
+{ARRAY}			{numChar+= yyleng; return ARRAY;}
+{OF}			{numChar+= yyleng; return OF;}
+{IF}			{numChar+= yyleng; return IF;}
+{THEN}			{numChar+= yyleng; return THEN;}
+{ENDIF}			{numChar+= yyleng; return ENDIF;}
+{ELSE}			{numChar+= yyleng; return ELSE;}
+{WHILE}			{numChar+= yyleng; return WHILE;}
+{DO}			{numChar+= yyleng; return DO;}
+{BEGINLOOP}		{numChar+= yyleng; return BEGINLOOP;}
+{ENDLOOP}		{numChar+= yyleng; return ENDLOOP;}
+{CONTINUE}		{numChar+= yyleng; return CONTINUE;}
+{READ}			{numChar+= yyleng; return READ;}
+{WRITE}			{numChar+= yyleng; return WRITE;}
+{AND}			{numChar+= yyleng; return AND;}
+{OR}			{numChar+= yyleng; return OR;}
+{NOT}			{numChar+= yyleng; return NOT;}
+{TRUE}			{numChar+= yyleng; return TRUE; }
+{FALSE}			{numChar+= yyleng; return FALSE;}
+{RETURN}		{numChar+= yyleng; return RETURN;}
 
 {IDENT} 		{numChar += yyleng; yylval.op = new std::string(yytext); return IDENT;}
-{NUMBER} 		{printf("NUMBER %d\n", atoi(yytext));numChar += yyleng;}
+{NUMBER} 		{numChar += yyleng; yylval.val = atoi(yytext); return NUMBER}
 {WH}+			{numChar += yyleng;}
 \n			{++numLines; numChar = 1;}
 {TAB}			{numChar += 3;}
