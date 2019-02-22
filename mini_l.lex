@@ -1,3 +1,8 @@
+%{
+        #include "y.tab.h"
+        #include "heading.h"
+	int numLines = 1, numChar = 1;
+%}
 /*
 * Numbers, letters, identifiers
 */
@@ -47,7 +52,7 @@ TAB			\t
 * Reserved Words
 */
 
-FUNCTION	"function"
+funct	        "function"
 BEGIN_PARAMS	"beginparams"
 END_PARAMS	"endparams"
 BEGIN_LOCALS	"beginlocals"
@@ -78,7 +83,7 @@ RETURN		"return"
 /*
 * Main function
 */
-	 int numLines = 1, numChar = 1;
+	
 
 %%
 {ADD} 			{numChar+= yyleng; return ADD;}
@@ -88,13 +93,13 @@ RETURN		"return"
 {DIV} 			{numChar+= yyleng; return DIV;}
 
 {EQ} 			{numChar+= yyleng; return EQ;}
-{NEQ} 			{;numChar+= yyleng; return NEQ;}
+{NEQ} 			{numChar+= yyleng; return NEQ;}
 {LT} 			{numChar+= yyleng; return LT;}
 {GT} 			{numChar+= yyleng; return GT;}
 {LTE} 			{numChar+= yyleng; return LTE;}
 {GTE} 			{numChar+= yyleng; return GTE;}
 
-{SEMICOLON} 		{numChar+= yyleng; return SEMICOLON:}
+{SEMICOLON} 		{numChar+= yyleng; return SEMICOLON;}
 {COLON} 		{numChar+= yyleng; return COLON;}
 {COMMA} 		{numChar+= yyleng; return COMMA;}
 {L_PAREN} 		{numChar+= yyleng; return L_PAREN;}
@@ -103,7 +108,7 @@ RETURN		"return"
 {R_SQUARE_BRACKET} 	{numChar+= yyleng; return R_SQUARE_BRACKET;}
 {ASSIGN} 		{numChar+= yyleng; return ASSIGN;}
 
-{FUNCTION}		{numChar+= yyleng; return FUNCTION;}
+{funct} 		{numChar+= yyleng; return FUNCTION;}
 {BEGIN_PARAMS}		{numChar+= yyleng; return BEGIN_PARAMS;}
 {END_PARAMS}		{numChar+= yyleng; return END_PARAMS;}
 {BEGIN_LOCALS}		{numChar+= yyleng; return BEGIN_LOCALS;}
@@ -131,8 +136,8 @@ RETURN		"return"
 {FALSE}			{numChar+= yyleng; return FALSE;}
 {RETURN}		{numChar+= yyleng; return RETURN;}
 
-{IDENT} 		{numChar += yyleng; yylval.op = new std::string(yytext); return IDENT;}
-{NUMBER} 		{numChar += yyleng; yylval.val = atoi(yytext); return NUMBER}
+{IDENT} 		{numChar += yyleng; yylval.op = yytext; return IDENT;}
+{NUMBER} 		{numChar += yyleng; yylval.val = atoi(yytext); return NUMBER;}
 {WH}+			{numChar += yyleng;}
 \n			{++numLines; numChar = 1;}
 {TAB}			{numChar += 3;}
@@ -142,8 +147,15 @@ RETURN		"return"
 .				{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", numLines, numChar, yytext); exit(1);}
 
 %%
-int main(){
-    yylex();
-    yyparse();
-    return 0;
+int main(int argc, char **argv)
+{
+  if ((argc > 1) && (freopen(argv[1], "r", stdin) == NULL))
+  {
+    cerr << argv[0] << ": File " << argv[1] << " cannot be opened.\n";
+    exit( 1 );
+  }
+  yylex(); 
+  yyparse();
+
+  return 0;
 }

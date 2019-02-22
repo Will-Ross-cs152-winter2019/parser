@@ -1,6 +1,5 @@
 %{
-#include <stdio.h>
-#include <string.h>
+#include "heading.h"
 int yyerror (char* s);
 int yylex (void);
 %}
@@ -29,9 +28,9 @@ char* op;
 %%
 
 program:	/* empty */	{printf("program -> epsilon\n");} 
-                | function 	{printf("program -> function\n");};
+                | funct 	{printf("program -> function\n");};
 
-function:       FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
+funct:       FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
 		{printf("FUNCTION IDENT SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY");}
 		;
 
