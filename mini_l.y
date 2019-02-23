@@ -105,26 +105,26 @@ comp:	        EQ 		{printf("comp -> EQ\n");}
 		| NEQ 		{printf("comp -> NEQ\n");}
 		| LT 		{printf("comp -> LT\n");}
 		| GT 		{printf("comp -> GT\n");}
-		| LTE 		{printf("LTE\n");}
-		| GTE 		{printf("GTE\n");}
+		| LTE 		{printf("comp -> LTE\n");}
+		| GTE 		{printf("comp -> GTE\n");}
 		;	
 
 para:           expression 			{printf("para -> expression\n");}
 		| expression COMMA para		{printf("para -> expression COMMA para\n");}
 		;
 
-t2:             IDENT L_PAREN para R_PAREN 	{printf("t3 -> IDENT L_PAREN para R_PAREN\n");}
-		| IDENT L_PAREN R_PAREN		{printf("t3 -> IDENT L_PAREN R_PAREN\n");}
+ident_term:     IDENT L_PAREN para R_PAREN 	{printf("ident_term -> IDENT L_PAREN para R_PAREN\n");}
+		| IDENT L_PAREN R_PAREN		{printf("ident_term -> IDENT L_PAREN R_PAREN\n");}
 		;  
 
-t1:             var 				{printf("t1 -> var\n");}
-		| NUMBER 			{printf("t1 -> NUMBER\n");}
-		| R_PAREN expression L_PAREN	{printf("t1 -> R_PAREN expression L_PAREN\n");}
+ident_var:      var 				{printf("ident_var -> var\n");}
+		| NUMBER 			{printf("ident_var -> NUMBER\n");}
+		| R_PAREN expression L_PAREN	{printf("ident_var -> R_PAREN expression L_PAREN\n");}
 		;
 
-term:           t1 				{printf("term -> t1\n");}
-                | SUB t1			{printf("term -> SUB t1\n");}
-		| t2				{printf("term -> t2\n");}
+term:           ident_var 			{printf("term -> ident_var\n");}
+                | SUB ident_var			{printf("term -> SUB ident_var\n");}
+		| ident_term			{printf("term -> ident_term\n");}
 		;		
 
 multi_express:  term 				{printf("multi_express -> term\n");}
