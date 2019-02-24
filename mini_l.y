@@ -1,17 +1,19 @@
 %{
 #include "heading.h"
+
 extern int yylex (void);
 
 
-int yyerror(char* s){
+int yyerror(char const  *s){
     extern int yylineno;
     extern char *yytext;
-    cerr << s << " at symbol \"" <<yytext;
+    cerr << s << " \"" << yytext;
     cerr << "\" on line " << yylineno << endl;  
     return 0;
 }
 %}
 
+%error-verbose
 %union{
 int val;
 char* op;
@@ -36,13 +38,16 @@ char* op;
 
 %%
 
-program:	/* empty */	{printf("program -> epsilon\n");} 
-                | FUNCTION funct 	{printf("program -> FUNCTION funct\n");}
-                ;
+program:        /* empty */ {printf("program -> epsilon\n");}
+                | function {printf("program -> function\n");};
 
-funct:          id SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
-		{printf("funct -> id SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY\n");}
-		;
+function:       FUNCTION id SEMICOLON BEGIN_PARAMS param_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
+		{printf("function -> FUNCTION id SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY\n");}
+		| error;
+
+param_loop:     /* empty */ {printf("param_loop -> epsilon\n");}
+                | declaration SEMICOLON param_loop {printf("param_loop -> declaration SEMICOLON param_loop\n");}
+                | error;
 
 dec_loop:       /* empty */  				{printf("dec_loop -> epsilon\n");}
                 | declaration SEMICOLON dec_loop	{printf("dec_loop -> declaration SEMICOLON dec_loop\n");}
@@ -54,7 +59,7 @@ declaration:    ident_loop COLON INTEGER 							{printf("declaration -> ident_lo
 
 ident_loop:     id 				{printf("ident_loop -> id\n");}
 		| id COMMA ident_loop	{printf("ident_loop -> id COMMA ident_loop\n");}
-		| error; 
+		; 
 
 statement:      var ASSIGN expression	{printf("statement -> var ASSIGN expression\n");}
                 | if_state		{printf("statement -> if_state\n");}
@@ -89,9 +94,9 @@ else_loop:      /* empty */					{printf("else_loop -> epsilon\n");}
                 | ELSE statement_loop				{printf("else_loop -> ELSE statement SEMICOLON statement_loop\n");}
 		| error;
 
-statement_loop: statement SEMICOLON			{printf("statement_loop -> epsilon\n");} 
+statement_loop: /*empty */ {printf("statement_loop -> epsilon\n");}		 
                 | statement SEMICOLON statement_loop	{printf("statement_loop -> statement SEMICOLON statement_loop\n");}
-		| error; 
+		; 
 
 bool_expr:      relation_and_expr 		{printf("bool_expr -> relation_and_expr\n");}
 		| OR relation_and_expr		{printf("bool_expr -> OR relation_and_expr\n");}
@@ -116,12 +121,11 @@ comp:	        EQ 		{printf("comp -> EQ\n");}
 		| GTE 		{printf("comp -> GTE\n");}
 		| error;	
 
-para:           expression 			{printf("para -> expression\n");}
-		| expression COMMA para		{printf("para -> expression COMMA para\n");}
-		;
+para:        	expression		        {printf("para -> expression");}
+                | expression COMMA para         {printf("para -expression COMMA para");};
+		
 
 ident_term:     id L_PAREN para R_PAREN 	{printf("ident_term -> id L_PAREN para R_PAREN\n");}
-		| id L_PAREN R_PAREN		{printf("ident_term -> id L_PAREN R_PAREN\n");}
 		;  
 
 ident_var:      var 				{printf("ident_var -> var\n");}
