@@ -52,7 +52,7 @@ TAB			\t
 * Reserved Words
 */
 
-funct	        "function"
+function        "function"
 BEGIN_PARAMS	"beginparams"
 END_PARAMS	"endparams"
 BEGIN_LOCALS	"beginlocals"
@@ -108,7 +108,7 @@ RETURN		"return"
 {R_SQUARE_BRACKET} 	{numChar+= yyleng; return R_SQUARE_BRACKET;}
 {ASSIGN} 		{numChar+= yyleng; return ASSIGN;}
 
-{funct} 		{numChar+= yyleng; return FUNCTION;}
+{function} 		{numChar+= yyleng; return FUNCTION;}
 {BEGIN_PARAMS}		{numChar+= yyleng; return BEGIN_PARAMS;}
 {END_PARAMS}		{numChar+= yyleng; return END_PARAMS;}
 {BEGIN_LOCALS}		{numChar+= yyleng; return BEGIN_LOCALS;}
@@ -142,7 +142,7 @@ RETURN		"return"
 \n			{++numLines; numChar = 1;}
 {TAB}			{numChar += 3;}
 "##".*
-{IDENT}_+ 			{printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", numLines, numChar, yytext); exit(1);}
-(_|{NUMBER})+({IDENT})		{printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", numLines, numChar, yytext); exit(1);}
-.				{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", numLines, numChar, yytext); exit(1);}
+{IDENT}_+ 			{printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", numLines, numChar, yytext);}
+(_|{NUMBER})+({IDENT})		{printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", numLines, numChar, yytext);}
+.				{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", numLines, numChar, yytext);}
 
