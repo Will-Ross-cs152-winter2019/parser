@@ -42,8 +42,8 @@ program:        /* empty */  {printf("program -> epsilon\n");}
                 | function {printf("program -> function\n");}
                 ;
 
-function:       FUNCTION id SEMICOLON BEGIN_PARAMS param_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
-		{printf("function -> FUNCTION id SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY\n");}
+function:       FUNCTION id SEMICOLON BEGIN_PARAMS param_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY program
+		{printf("function -> FUNCTION id SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY program\n");}
                 ;
 
 param_loop:     /* empty */ {printf("param_loop -> epsilon\n");}
