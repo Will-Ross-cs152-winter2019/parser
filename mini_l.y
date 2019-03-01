@@ -139,22 +139,22 @@ term:           ident_var 			{printf("term -> ident_var\n");}
 		| ident_term			{printf("term -> ident_term\n");}
 		;		
 
-multi_express:  term 				{printf("multi_express -> term\n");}
-		| term MULT term 		{printf("multi_express -> term MULT term\n");}
-		| term DIV term 		{printf("multi_express -> term DIV term\n");}
-		| term MOD term			{printf("multi_express -> term MOD term\n");}
+multi_express:  term 						{printf("multi_express -> term\n");}
+		| multi_express MULT term			{printf("multi_express -> multi_express MULT term\n");}
+		| multi_express DIV term 			{printf("multi_express -> multi_express DIV term\n");}
+		| multi_express MOD term			{printf("multi_express -> multi_express MOD term\n");}
 		;
 
 expression:     multi_express 				{printf("expression -> multi_express\n");}
-		| multi_express ADD multi_express	{printf("expression -> multi_express ADD multi_express\n");}
-		| multi_express SUB multi_express	{printf("expression -> multi_express SUB multi_express\n");}
+		| expression ADD multi_express		{printf("expression -> expression ADD multi_express\n");}
+		| expression SUB multi_express		{printf("expression -> expression SUB multi_express\n");}
 		;
 
-var:            id 	    				{printf("var -> id\n");}
+var:            id 	    							{printf("var -> id\n");}
 		| id L_SQUARE_BRACKET expression R_SQUARE_BRACKET		{printf("id L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n");}
 		;
 
-id:             IDENT {printf("IDENT -> %s\n", $1);};
+id:             IDENT 					{printf("IDENT -> %s\n", $1);};
 
 
 %%
