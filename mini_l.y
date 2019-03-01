@@ -7,7 +7,7 @@ extern int yylex (void);
 int yyerror(char const  *s){
     extern int yylineno;
     extern char *yytext;
-    cerr << s << " \"" << yytext;
+    cerr << s << " -- Instead found \"" << yytext;
     cerr << "\" on line " << yylineno << endl;  
     return 0;
 }
@@ -38,12 +38,13 @@ char* op;
 
 %%
 
-program:        /* empty */ {printf("program -> epsilon\n");}
-                | function {printf("program -> function\n");};
+program:        /* empty */  {printf("program -> epsilon\n");}
+                | function {printf("program -> function\n");}
+                ;
 
 function:       FUNCTION id SEMICOLON BEGIN_PARAMS param_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY
 		{printf("function -> FUNCTION id SEMICOLON BEGIN_PARAMS dec_loop END_PARAMS BEGIN_LOCALS dec_loop END_LOCALS BEGIN_BODY statement_loop END_BODY\n");}
-		| error;
+                ;
 
 param_loop:     /* empty */ {printf("param_loop -> epsilon\n");}
                 | declaration SEMICOLON param_loop {printf("param_loop -> declaration SEMICOLON param_loop\n");}
@@ -69,7 +70,7 @@ statement:      var ASSIGN expression	{printf("statement -> var ASSIGN expressio
                 | write_state		{printf("statement -> write_state\n");}
                 | CONTINUE 		{printf("statement -> CONTINUE\n");}
 		| RETURN expression	{printf("statement -> RETURN expression\n");}
-		| error;
+		;
 
 if_state:       IF bool_expr THEN statement_loop else_loop ENDIF		{printf("if_state -> IF bool_expr THEN statement SEMICOLON statement_loop else_loop ENDIF\n");}
 		; 
@@ -92,7 +93,7 @@ var_loop:       var 			{printf("var_loop -> var\n");}
 
 else_loop:      /* empty */					{printf("else_loop -> epsilon\n");}  
                 | ELSE statement_loop				{printf("else_loop -> ELSE statement SEMICOLON statement_loop\n");}
-		| error;
+		;
 
 statement_loop: /*empty */ {printf("statement_loop -> epsilon\n");}		 
                 | statement SEMICOLON statement_loop	{printf("statement_loop -> statement SEMICOLON statement_loop\n");}
@@ -130,7 +131,7 @@ ident_term:     id L_PAREN para R_PAREN 	{printf("ident_term -> id L_PAREN para 
 
 ident_var:      var 				{printf("ident_var -> var\n");}
 		| NUMBER 			{printf("ident_var -> NUMBER%d\n", $1);}
-		| R_PAREN expression L_PAREN	{printf("ident_var -> R_PAREN expression L_PAREN\n");}
+		| L_PAREN expression R_PAREN	{printf("ident_var -> R_PAREN expression L_PAREN\n");}
 		;
 
 term:           ident_var 			{printf("term -> ident_var\n");}
